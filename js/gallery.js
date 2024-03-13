@@ -65,11 +65,10 @@ const images = [
 ];
 
 const galleryContainer = document.querySelector('.gallery');
-let modal;
 
-const createGalleryMarkup = (images) => {
-  return images.map(({ preview, original, description }) =>
-    `<li class="gallery-item">
+function createGalleryMarkup(images) {
+  return images.map(({ preview, original, description }) => `
+  <li class="gallery-item">
   <a class="gallery-link" href="${original}">
     <img
       class="gallery-image"
@@ -78,37 +77,32 @@ const createGalleryMarkup = (images) => {
       alt="${description}"
     />
   </a>
-</li>`
-  )
+</li>
+  `)
     .join('');
-};
-
-const onShow = () => {
-  document.addEventListener('keydown', pressEscape);
 }
 
-const onClose = () => {
-  document.removeEventListener('keydown', pressEscape);
+function onGalleryContainerClick(evt) {
+  if (!evt.target.classList.contains('gallery-image')) return;
+
+  evt.preventDefault();
+
+  const { dataset: { source: largeImageLink }, alt } = evt.target;
+
+  const modal = basicLightbox.create(
+    `<img src="${largeImageLink}" alt="${alt}" width="1112" height="640">`,
+    {
+      onShow: () => document.addEventListener('keydown', pressEscape),
+      onClose: () => document.removeEventListener('keydown', pressEscape),
+    }
+  );
+
+  modal.show();
+
+  function pressEscape(evt) {
+    if (evt.key === 'Escape') modal.close(); 
+  }
 }
 
 galleryContainer.insertAdjacentHTML('beforeend', createGalleryMarkup(images));
-
-galleryContainer.addEventListener('click', evt => {
-  if (evt.target.classList.contains('gallery-image')) {
-    evt.preventDefault();
-
-    const largeImageLink = evt.target.getAttribute('data-source');
-    
-    modal = basicLightbox.create(
-      `<img src="${largeImageLink}" width="1112" height="640">`,
-      { onShow, onClose }
-    );
-    modal.show();
-  }
-});
-
-const pressEscape = evt => {
-  if (evt.key === 'Escape') {
-    modal.close();
-  }
-}
+galleryContainer.addEventListener('click', onGalleryContainerClick);
