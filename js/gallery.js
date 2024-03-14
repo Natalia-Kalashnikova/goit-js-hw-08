@@ -64,6 +64,52 @@ const images = [
   },
 ];
 
+// const galleryContainer = document.querySelector('.gallery');
+
+// function createGalleryMarkup(images) {
+//   return images.map(({ preview, original, description }) => `
+//   <li class="gallery-item">
+//   <a class="gallery-link" href="${original}">
+//     <img
+//       class="gallery-image"
+//       src="${preview}"
+//       data-source="${original}"
+//       alt="${description}"
+//     />
+//   </a>
+// </li>
+//   `)
+//     .join('');
+// }
+
+// function onGalleryContainerClick(evt) {
+//   if (!evt.target.classList.contains('gallery-image')) return;
+
+//   evt.preventDefault();
+
+//   const { dataset: { source: largeImageLink }, alt } = evt.target;
+
+//   const modal = basicLightbox.create(
+//     `<img src="${largeImageLink}" alt="${alt}" width="1112" height="640">`,
+//     {
+//       onShow: () => document.addEventListener('keydown', pressEscape),
+//       onClose: () => document.removeEventListener('keydown', pressEscape),
+//     }
+//   );
+
+//   modal.show();
+
+//   function pressEscape(evt) {
+//     if (evt.key === 'Escape') modal.close(); 
+//   }
+// }
+
+// galleryContainer.insertAdjacentHTML('beforeend', createGalleryMarkup(images));
+// galleryContainer.addEventListener('click', onGalleryContainerClick);
+
+
+/** Improvements */
+
 const galleryContainer = document.querySelector('.gallery');
 
 function createGalleryMarkup(images) {
@@ -89,6 +135,10 @@ function onGalleryContainerClick(evt) {
 
   const { dataset: { source: largeImageLink }, alt } = evt.target;
 
+  handleModalWindow(largeImageLink, alt);
+}
+
+function handleModalWindow (largeImageLink, alt) {
   const modal = basicLightbox.create(
     `<img src="${largeImageLink}" alt="${alt}" width="1112" height="640">`,
     {
