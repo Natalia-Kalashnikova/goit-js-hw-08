@@ -15,7 +15,7 @@
 Для цього в HTML коді додай тег контейнера галереї — невпорядкований список із
 класом `gallery`.
 
-```
+```HTML
 <ul class="gallery"></ul>
 ```
 
@@ -28,7 +28,7 @@
 - `original` — посилання на велику версію зображення для модального вікна
 - `description` — текстовий опис зображення, для атрибута `alt` малого
   зображення та підпису великого зображення в модалці.
-  ```
+  ```javascript
   const images = [ { preview:
   'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
   original:
@@ -78,7 +78,7 @@
 всередину `ul.gallery`. Не додавай інші HTML теги, крім тих, що містяться в
 цьому шаблоні.
 
-```
+```HTML
 <li class="gallery-item">
   <a class="gallery-link" href="large-image.jpg">
     <img
